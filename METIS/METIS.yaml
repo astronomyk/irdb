@@ -1,5 +1,6 @@
 ---
 ### METIS
+
 object: instrument
 alias: INST
 name: METIS
@@ -15,6 +16,20 @@ effects:
     class: SurfaceList
     kwargs:
       filename: LIST_METIS_mirrors_cfo.dat
+
+  - name: slit_wheel
+    description: collection of field masks and slits
+    class: SlitWheel
+    kwargs:
+      slit_names:
+        - A
+        - B
+        - C
+        - D
+        - E
+      filename_format: MASK_slit_{}.dat
+      current_slit: "!OBS.slit"
+      include: "!OBS.slit"
 
 #  - name : metis_adc_residuals
 #    class : AtmosphericDispersionCorrection

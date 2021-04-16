@@ -1,73 +1,74 @@
 ---
 ### METIS LM IMAGING MODE
+
 object: instrument
 alias: INST
 name: METIS_IMG_LM
 description: base configuration for METIS
 
 properties:
-    pixel_scale: 0.00525         # arcsec / pixel
-    plate_scale: 0.291666666667  # arcsec / mm
+  pixel_scale: 0.00525         # arcsec / pixel
+  plate_scale: 0.291666666667  # arcsec / mm
 
 effects:
-    - name: metis_img_lm_mirror_list
-      description: list of extra mirrors needed for the LM IMG mode
-      class: SurfaceList
-      kwargs:
-          filename: LIST_METIS_mirrors_img_lm.dat
+  - name: metis_img_lm_mirror_list
+    description: list of extra mirrors needed for the LM IMG mode
+    class: SurfaceList
+    kwargs:
+      filename: LIST_METIS_mirrors_img_lm.dat
 
-    - name: filter_wheel
-      description: IMG_LM science filters
-      class: FilterWheel
-      kwargs:
-          filter_names:
-              # 18 positions (E-REP-MPIA-MET-1008_1-0)
-              - open
-              - Lp
-              - short-L
-              - L_spec
-              - Mp
-              - M_spec
-              - Br_alpha
-              - Br_alpha_ref
-              - PAH_3.3
-              - PAH_3.3_ref
-              - CO_1-0_ice
-              - CO_ref
-              - H2O-ice
-              - IB_4.05
-              - HCI_L_short
-              - HCI_L_long
-              - HCI_M
-          filename_format: "!INST.filter_file_format"
-          current_filter: "!OBS.filter_name"
-          minimum_throughput: !!float 0.
-          outer: 56                               # E-REP-MPIA-MET-1008_1-0
-          outer_unit: "mm"
+  - name: filter_wheel
+    description: IMG_LM science filters
+    class: FilterWheel
+    kwargs:
+      filter_names:
+        # 18 positions (E-REP-MPIA-MET-1008_1-0)
+        - open
+        - Lp
+        - short-L
+        - L_spec
+        - Mp
+        - M_spec
+        - Br_alpha
+        - Br_alpha_ref
+        - PAH_3.3
+        - PAH_3.3_ref
+        - CO_1-0_ice
+        - CO_ref
+        - H2O-ice
+        - IB_4.05
+        - HCI_L_short
+        - HCI_L_long
+        - HCI_M
+      filename_format: "!INST.filter_file_format"
+      current_filter: "!OBS.filter_name"
+      minimum_throughput: !!float 0.
+      outer: 56                               # E-REP-MPIA-MET-1008_1-0
+      outer_unit: "mm"
 
-    - name: nd_filter_wheel
-      class: FilterWheel
-      description: IMG_LM neutral density filters
-      kwargs:
-          filter_names:
-              # 11 positions (E-REP-MPIA-MET-1008_1-0)
-              # OD = optical density, transmissivity 10^{-OD}.
-              - open
-              - ND_OD1
-              - ND_OD2
-              - ND_OD3
-              - ND_OD4
-              - ND_OD5
-          filename_format: "!INST.filter_file_format"
-          current_filter: "!OBS.nd_filter_name"
-          minimum_throughput: !!float 0.
-          outer: 56                                # E-REP-MPIA-MET-1008_1-0
-          outer_unit: "mm"
+  - name: nd_filter_wheel
+    class: FilterWheel
+    description: IMG_LM neutral density filters
+    kwargs:
+      filter_names:
+        # 11 positions (E-REP-MPIA-MET-1008_1-0)
+        # OD = optical density, transmissivity 10^{-OD}.
+        - open
+        - ND_OD1
+        - ND_OD2
+        - ND_OD3
+        - ND_OD4
+        - ND_OD5
+      filename_format: "!INST.filter_file_format"
+      current_filter: "!OBS.nd_filter_name"
+      minimum_throughput: !!float 0.
+      outer: 56                                # E-REP-MPIA-MET-1008_1-0
+      outer_unit: "mm"
 
-    - name: metis_psf_img
-      description: field constant, wavelength dependent PSF for imaging mode
-      class: FieldConstantPSF
-      kwargs:
-          filename: PSF_SCAO_9mag_06seeing.fits
-          wave_key: "WAVELENG"
-          bkg_width: -1
+  - name: metis_psf_img
+    description: field constant, wavelength dependent PSF for imaging mode
+    class: FieldConstantPSF
+    kwargs:
+      filename: PSF_SCAO_9mag_06seeing.fits
+      wave_key: "WAVELENG"
+      bkg_width: -1

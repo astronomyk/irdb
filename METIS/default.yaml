@@ -36,6 +36,7 @@ mode_yamls:
     properties:
       filter_name: Lp
       nd_filter_name: open
+      slit: false
 
   - object: observation
     alias: OBS
@@ -47,6 +48,7 @@ mode_yamls:
     properties:
       filter_name: N2
       nd_filter_name: open
+      slit: false
 
   - object: observation
     alias: OBS
@@ -58,7 +60,7 @@ mode_yamls:
       - METIS_DET_IMG_LM.yaml
     properties:
       trace_file: TRACE_LSS_L.fits
-      slit_file: MASK_slit_C.dat
+      slit: C
       filter_name: L_spec
       nd_filter_name: open
 
@@ -72,7 +74,7 @@ mode_yamls:
       - METIS_DET_IMG_LM.yaml
     properties:
       trace_file: TRACE_LSS_M.fits
-      slit_file: MASK_slit_C.dat
+      slit: C
       filter_name: M_spec
       nd_filter_name: open
 
@@ -86,7 +88,7 @@ mode_yamls:
       - METIS_DET_IMG_N_GeoSnap.yaml
     properties:
       trace_file: TRACE_LSS_N.fits
-      slit_file: MASK_slit_C.dat
+      slit: C
       filter_name: N_spec
       nd_filter_name: open
 
@@ -97,6 +99,8 @@ mode_yamls:
     yamls:
       - METIS_LMS.yaml
       - METIS_DET_IFU.yaml
+    properties:
+      slit: false
 
   - object: observation     # is this a separate mode from nominal LMS?
     alias: OBS
@@ -105,6 +109,8 @@ mode_yamls:
     yamls:
       - METIS_LMS_EXT.yaml
       - METIS_DET_IFU.yaml
+    properties:
+      slit: false
 
 ignore_effects:
   - armazones_atmo_dispersion
@@ -127,7 +133,7 @@ properties:
     wave_mid: 10.5
     wave_max: 18.0
 
-###---
+### ---
 #### default simulation parameters needed for a METIS simulation
 # object : atmosphere overrides
 # alias : ATMO

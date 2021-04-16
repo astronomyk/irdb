@@ -1,5 +1,6 @@
 '''Basic unit tests for irdb/METIS'''
-# pylint: disable=R0201
+# pylint: disable=no-self-use, missing-class-docstring
+# pylint: disable=missing-function-docstring
 
 import os
 from glob import glob
@@ -23,16 +24,22 @@ scopesim.rc.__config__["!SIM.file.local_packages_path"] = PKGS_DIR
 
 class TestLoads:
     '''Test that irdb/METIS is loaded and an OpticalTrain is produced'''
-    def test_scopesim_loads_package(self):
-        '''Load the configuration from default.yaml. Modes other than
-        the default are not tested.'''
-        metis = scopesim.OpticalTrain("METIS")
+
+    @pytest.mark.parametrize("themode",
+                             ["img_lm", "img_n", "lss_l", "lss_m", "lss_n"])
+    def test_scopesim_loads_package(self, themode):
+        '''Load the configuration for all supported modes'''
+        cmd = scopesim.UserCommands(use_instrument="METIS",
+                                    set_modes=[themode])
+        assert isinstance(cmd, scopesim.UserCommands)
+
+        metis = scopesim.OpticalTrain(cmd)
         assert isinstance(metis, scopesim.OpticalTrain)
 
 
 YAML_LIST = glob(os.path.join(PKGS_DIR, "METIS/*.yaml"))
-@pytest.fixture(scope="class", params=YAML_LIST)
-def yaml_list(request):
+@pytest.fixture(name="yaml_list", scope="class", params=YAML_LIST)
+def fixture_yaml_list(request):
     return scopesim.commands.user_commands.load_yaml_dicts(request.param)
 
 class TestYAML:
@@ -53,8 +60,8 @@ class TestYAML:
 
 
 FILTER_LIST = glob(os.path.join(PKGS_DIR, "METIS/filters/TC_filter_*.dat"))
-@pytest.fixture(scope="class", params=FILTER_LIST)
-def filter_ter(request):
+@pytest.fixture(name="filter_ter", scope="class", params=FILTER_LIST)
+def fixture_filter_ter(request):
     return scopesim.effects.FilterCurve(filename=request.param)
 
 class TestFilters:
@@ -79,8 +86,8 @@ class TestFilters:
 
 
 QE_LIST = glob(os.path.join(PKGS_DIR, "METIS/QE_detector_*.dat"))
-@pytest.fixture(scope="class", params=QE_LIST)
-def qe_curve(request):
+@pytest.fixture(name="qe_curve", scope="class", params=QE_LIST)
+def fixture_qe_curve(request):
     return scopesim.effects.QuantumEfficiencyCurve(filename=request.param)
 
 class TestQuantumEfficiency:
@@ -105,8 +112,8 @@ class TestQuantumEfficiency:
 
 
 TER_LIST = glob(os.path.join(PKGS_DIR, "METIS/TER_*.dat"))
-@pytest.fixture(scope="class", params=TER_LIST)
-def ter_curve(request):
+@pytest.fixture(name="ter_curve", scope="class", params=TER_LIST)
+def fixture_ter_curve(request):
     return scopesim.effects.TERCurve(filename=request.param)
 
 class TestTERCurve:
@@ -131,8 +138,8 @@ class TestTERCurve:
 
 
 FPA_LIST = glob(os.path.join(PKGS_DIR, "METIS/FPA_*_layout.dat"))
-@pytest.fixture(scope="class", params=FPA_LIST)
-def det_list(request):
+@pytest.fixture(name="det_list", scope="class", params=FPA_LIST)
+def fixture_det_list(request):
     return scopesim.effects.DetectorList(filename=request.param)
 
 class TestFPALayout:
@@ -149,8 +156,8 @@ class TestFPALayout:
 
 #### linearity files are currently empty, hence tests xfail
 LIN_LIST = glob(os.path.join(PKGS_DIR, "METIS/FPA_linearity_*.dat"))
-@pytest.fixture(scope="class", params=LIN_LIST)
-def lin_curve(request):
+@pytest.fixture(name="lin_curve", scope="class", params=LIN_LIST)
+def fixture_lin_curve(request):
     return scopesim.effects.LinearityCurve(filename=request.param)
 
 class TestLinearityCurve:
@@ -166,8 +173,8 @@ class TestLinearityCurve:
 
 
 MASK_LIST = glob(os.path.join(PKGS_DIR, "METIS/MASK_slit_*.dat"))
-@pytest.fixture(scope="class", params=MASK_LIST)
-def slit_mask(request):
+@pytest.fixture(name="slit_mask", scope="class", params=MASK_LIST)
+def fixture_slit_mask(request):
     return scopesim.effects.ApertureMask(filename=request.param)
 
 class TestSlitMask:
@@ -188,8 +195,8 @@ class TestSlitMask:
 
 
 TRACE_LIST = glob(os.path.join(PKGS_DIR, "METIS/TRACE*.fits"))
-@pytest.fixture(scope="class", params=TRACE_LIST)
-def trace_list(request):
+@pytest.fixture(name="trace_list", scope="class", params=TRACE_LIST)
+def fixture_trace_list(request):
     return scopesim.effects.SpectralTraceList(filename=request.param)
 
 class TestTraceFile:

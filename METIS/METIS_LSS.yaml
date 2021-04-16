@@ -12,11 +12,6 @@ effects:
   #    kwargs:
   #      filename: LIST_METIS_mirrors_lss_lm.dat
   #
-  - name: spectroscopic_slit_aperture
-    description: slit mask definition
-    class: ApertureMask
-    kwargs:
-      filename: "!OBS.slit_file"
 
   - name: lss_spectral_traces
     description: list of spectral order trace geometry on the focal plane
@@ -24,6 +19,7 @@ effects:
     kwargs:
       filename: "!OBS.trace_file"
       wave_colname: "wavelength"
+      dwave: 0.0005
       s_colname: "xi"
       col_number_start: 1
-      invalid_value: 0
+      #invalid_value: None
